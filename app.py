@@ -12,8 +12,10 @@ app = Flask(__name__)
 
 app.config['SECRET_KEY'] = "secret"
 
-app.config['SQLALCHEMY_DATABASE_URI'] = "postgresql:///adopt"
-# app.config['SQLALCHEMY_DATABASE_URI'] = "postgresql://postgres:qwerty@localhost/adopt"
+DEFAULT_IMAGE_URL = 'https://cdn.dribbble.com/users/2095589/screenshots/4166422/user_1.png'
+
+# app.config['SQLALCHEMY_DATABASE_URI'] = "postgresql:///adopt"
+app.config['SQLALCHEMY_DATABASE_URI'] = "postgresql://postgres:qwerty@localhost/adopt"
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 connect_db(app)
@@ -29,19 +31,23 @@ toolbar = DebugToolbarExtension(app)
 
 @app.route("/")
 def root():
+    """ Renders the html for listing the pets """
     pets = Pet.query.all()
     return render_template("list-pets.html", pets=pets)
 
 
 @app.route("/add", methods=["GET", "POST"])
-def add_form():
+def show_add_form():
+    """ Shows a form for adding a pet to the list of pets.
+        Handles form submission and makes changes in the db.
+    """
 
     form = AddPetForm()
 
     if form.validate_on_submit():
         name = form.name.data
         species = form.species.data
-        photo_url = form.photo_url.data
+        photo_url = form.photo_url.data or None
         age = form.age.data
         notes = form.notes.data
 
@@ -55,13 +61,14 @@ def add_form():
         return render_template("add-pets.html", form=form)
 
 @app.route('/<pet_id>', methods=['GET', 'POST'])
-def pet_detail(pet_id): 
+def show_pet_detail(pet_id):
+    """ Show details about a pet and a form for editing some details about that pet."""
 
     pet = Pet.query.get(pet_id)
     form = EditPetForm(obj=pet)
 
     if form.validate_on_submit():
-        pet.photo_url = form.photo_url.data
+        pet.photo_url = form.photo_url.data or DEFAULT_IMAGE_URL
         pet.notes = form.notes.data
         available = form.available.data
         if available == 'False':
