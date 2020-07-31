@@ -8,11 +8,11 @@
     {% if pets %}
         {% for pet in pets %}
           <div>
-            <img src="{{pet.photo_url}}" alt="">
+            <img class='img-thumbnail' src="{{pet.photo_url}}" alt="">
             {% if pet.available %}
-              <div>{{pet.name}} is <b>available</b></div>
+            <div><a href="/{{pet.id}}">{{pet.name}}</a> is <b>available</b></div>
             {% else %}
-              <div>{{pet.name}} is <b>not available</b></div>
+              <div><a href="/{{pet.id}}">{{pet.name}}</a> is <b>not available</b></div>
             {% endif %}
           </div>
         {% endfor %}

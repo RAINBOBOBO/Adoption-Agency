@@ -23,6 +23,7 @@ class Pet(db.Model):
     id = db.Column(db.Integer,primary_key=True,autoincrement=True)
     name = db.Column(db.String(30), nullable=False)
     species = db.Column(db.String(30), nullable=False)
+    # TODO:#need to fix our default image
     photo_url = db.Column(db.String(250), nullable=False, default=DEFAULT_IMAGE_URL)
     age = db.Column(db.String(30), nullable=False) #make a dropdown for this one
     notes = db.Column(db.String(300), nullable=False, default='')
