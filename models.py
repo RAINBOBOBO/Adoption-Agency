@@ -25,11 +25,11 @@ class Pet(db.Model):
     species = db.Column(db.String(30), nullable=False)
     photo_url = db.Column(db.String(250), nullable=False, default=DEFAULT_IMAGE_URL)
     age = db.Column(db.String(30), nullable=False) #make a dropdown for this one
-    notes = db.Column(db.String(300))
+    notes = db.Column(db.String(300), nullable=False, default='')
     available = db.Column(db.Boolean(), nullable=False, default=True)
 
     def __repr__(self):
-    """Show info about the pet."""
+        """Show info about the pet."""
 
-    p = self
-    return f"<Per {p.name} {p.species} {p.photo_url} {p.age} {p.notes} {p.available}>"
+        p = self
+        return f"<Per {p.name} {p.species} {p.photo_url} {p.age} {p.notes} {p.available}>"

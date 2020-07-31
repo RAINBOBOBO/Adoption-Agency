@@ -1,10 +1,10 @@
 """Flask app for adopt app."""
 
-from flask import Flask, render_template
+from flask import Flask, render_template, flash, redirect
 
 from flask_debugtoolbar import DebugToolbarExtension
 
-from models import db, connect_db
+from models import db, connect_db, Pet
 
 from forms import AddPetForm
 
@@ -37,4 +37,14 @@ def add_form():
 
   form = AddPetForm()
 
-  if form.validate_on_submit
+  if form.validate_on_submit():
+    name = form.name.data
+    species = form.species.data
+    photo_url = form.photo_url.data
+    age = form.age.choices
+    notes = form.notes.data
+
+    flash(f"Added the {species} named {name}.")
+    return redirect("/")
+  else:
+    return render_template("add-pets.html", form=form)
