@@ -9,11 +9,7 @@
         {% for pet in pets %}
           <div>
             <img class='img-thumbnail' src="{{pet.photo_url}}" alt="">
-            {% if pet.available %}
-              <div><a href="/{{pet.id}}">{{pet.name}}</a> is <b>available</b></div>
-            {% else %}
-              <div><a href="/{{pet.id}}">{{pet.name}}</a> is <b>not available</b></div>
-            {% endif %}
+            <div><a href="/{{pet.id}}">{{pet.name}}</a> is <b>{{"not" if not pet.available}} available</b></div>
           </div>
         {% endfor %}
     {% endif %}

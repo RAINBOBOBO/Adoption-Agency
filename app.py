@@ -1,11 +1,8 @@
 """Flask app for adopt app."""
 
 from flask import Flask, render_template, flash, redirect
-
 from flask_debugtoolbar import DebugToolbarExtension
-
 from models import db, connect_db, Pet
-
 from forms import AddPetForm, EditPetForm
 
 app = Flask(__name__)
